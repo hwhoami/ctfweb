@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 CTF Challenge Arena</title>
+    <link rel="stylesheet" href="style.css?v=20260630">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div class="logo-section">
+                    <h1>☠️ Capture The Flag Arena</h1>
+                    <p>Temukan 3 flag tersembunyi untuk memenangkan permainan!</p>
+                </div>
+                <div class="auth-section">
+                    <div id="authButtons"></div>
+                </div>
+            </div>
+            <div id="score">🏆 Flag ditemukan: <span id="flagCount">0</span>/3</div>
+            <div id="userInfo" class="user-info"></div>
+            <div id="activityLogPanel"></div>
+        </header>
+
+        <main>
+            <!-- Challenge 1: Inspeksi Elemen -->
+            <section class="challenge" id="challenge1">
+                <h2>🔍 Challenge 1: Inspeksi Elemen</h2>
+                <p>Flag tersembunyi di suatu tempat di halaman ini. Periksa dengan teliti!</p>
+                <div class="hint">Petunjuk: Lihat di antara baris-baris yang tidak terlihat</div>
+                <!-- FLAG{insp3ksi_3l3m3n_ad4l4h_kunci} -->
+                <div class="challenge-input">
+                    <input type="text" id="flag1" placeholder="Masukkan flag...">
+                    <button class="btn btn-primary" onclick="checkChallenge1()">Kirim Flag</button>
+                </div>
+                <div id="result1" class="result"></div>
+            </section>
+
+            <!-- Challenge 2: Console Log -->
+            <section class="challenge" id="challenge2">
+                <h2>💻 Challenge 2: Console Log</h2>
+                <p>Buka console browser (F12) dan temukan flag di dalam kode JavaScript!</p>
+                <div class="hint">Petunjuk: Coba ketik <code>showFlag()</code> di console</div>
+                <div class="challenge-input">
+                    <input type="text" id="flag2" placeholder="Masukkan flag...">
+                    <button class="btn btn-primary" onclick="checkChallenge2()">Kirim Flag</button>
+                </div>
+                <div id="result2" class="result"></div>
+            </section>
+
+            <!-- Challenge 3: SQL Injection -->
+            <section class="challenge" id="challenge3">
+                <h2>🗄️ Challenge 3: SQL Injection</h2>
+                <p>Login sebagai admin untuk mendapatkan flag!</p>
+                <div class="hint">Petunjuk: Coba gunakan <code>' OR '1'='1</code></div>
+                <div class="challenge3-table-wrapper">
+                    <table class="challenge3-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Flag</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" id="username" placeholder="Username" value="user"></td>
+                                <td><input type="password" id="password" placeholder="Password" value="pass"></td>
+                                <td><input type="text" id="flag3Input" placeholder="Flag akan muncul setelah berhasil" disabled></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary" onclick="checkLogin()">Login</button>
+                </div>
+                <div id="result3" class="result"></div>
+            </section>
+
+            <!-- Victory Modal -->
+            <div id="victoryModal" class="modal hidden">
+                <div class="modal-content">
+                    <button class="close-modal" onclick="document.getElementById('victoryModal').classList.add('hidden')">&times;</button>
+                    <h2>🎉 SELAMAT! 🎉</h2>
+                    <p>Anda berhasil menemukan semua 3 flag!</p>
+                    <div id="victoryMessage"></div>
+                    <button class="btn btn-success btn-full" onclick="resetGame()">Main Lagi</button>
+                </div>
+            </div>
+
+            <!-- Leaderboard Modal -->
+            <div id="leaderboardModal" class="modal hidden">
+                <div class="modal-content leaderboard-modal">
+                    <button class="close-modal" onclick="closeLeaderboard()">&times;</button>
+                    <h2>🏆 Leaderboard Penyelesaian</h2>
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Progress</th>
+                                <th>Terakhir Update</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- User Manager Modal -->
+            <div id="userManagerModal" class="modal hidden">
+                <div class="modal-content user-manager-modal">
+                    <button class="close-modal" onclick="closeUserManager()">&times;</button>
+                    <h2>🛠️ Manajemen User</h2>
+                    <p>Kelola akun yang tersimpan di server.</p>
+                    <div class="user-manager-actions">
+                        <button class="btn btn-success btn-small" onclick="loadUserManager()">🔄 Refresh</button>
+                    </div>
+                    <div id="userManagerStatus" class="result"></div>
+                    <div class="user-manager-list-wrapper">
+                        <table class="user-manager-table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Dibuat</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userManagerBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created by hazet for educational purposes | Happy Hacking! 🚀</p>
+        </footer>
+    </div>
+
+    <!-- Modal Login/Register -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-content auth-modal">
+            <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+            <div id="authFormContainer">
+                <!-- Login Form -->
+                <div id="loginFormContainer">
+                    <h2>🔐 Login</h2>
+                    <form onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input type="text" id="loginUsername" placeholder="Masukkan username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" placeholder="Masukkan password" required>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-full" onclick="handleLogin()">Login</button>
+                        <p class="auth-switch">Belum punya akun? <a href="#" onclick="showRegister()">Daftar</a></p>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerFormContainer" style="display: none;">
+                    <h2>📝 Register</h2>
+                    <form onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="registerUsername">Username</label>
+                            <input type="text" id="registerUsername" placeholder="Pilih username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" placeholder="Buat password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerConfirmPassword">Konfirmasi Password</label>
+                            <input type="password" id="registerConfirmPassword" placeholder="Konfirmasi password" required>
+                        </div>
+                        <button type="button" class="btn btn-success btn-full" onclick="handleRegister()">Daftar</button>
+                        <p class="auth-switch">Sudah punya akun? <a href="#" onclick="showLogin()">Login</a></p>
+                    </form>
+                </div>
+            </div>
+            <div id="authMessage" class="auth-message"></div>
+        </div>
+    </div>
+
+    <script src="db.js?v=20260630"></script>
+    <script src="script.js?v=20260630"></script>
+</body>
+</html>

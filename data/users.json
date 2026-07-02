@@ -1,0 +1,99 @@
+{
+  "users": [
+    {
+      "username": "testuser",
+      "password": "123456",
+      "createdAt": "2026-06-30T03:05:03.722417+00:00"
+    },
+    {
+      "username": "browseruser",
+      "password": "123456",
+      "createdAt": "2026-06-30T03:06:35.237341+00:00"
+    },
+    {
+      "username": "cachetest",
+      "password": "123456",
+      "createdAt": "2026-06-30T03:07:45.708158+00:00"
+    },
+    {
+      "username": "alok",
+      "password": "alok123",
+      "createdAt": "2026-06-30T03:08:17.338942+00:00"
+    },
+    {
+      "username": "alokk",
+      "password": "anjay123",
+      "createdAt": "2026-06-30T03:18:42.853243+00:00"
+    },
+    {
+      "username": "anjir",
+      "password": "anjir123",
+      "createdAt": "2026-06-30T08:14:17.003214+00:00"
+    }
+  ],
+  "progress": [
+    {
+      "username": "testuser",
+      "flag1": false,
+      "flag2": false,
+      "flag3": false,
+      "flagsFound": 0,
+      "lastUpdated": "2026-06-30T03:05:03.722646+00:00"
+    },
+    {
+      "username": "browseruser",
+      "flag1": false,
+      "flag2": false,
+      "flag3": false,
+      "flagsFound": 0,
+      "lastUpdated": "2026-06-30T03:06:35.237477+00:00"
+    },
+    {
+      "username": "cachetest",
+      "flag1": false,
+      "flag2": false,
+      "flag3": false,
+      "flagsFound": 0,
+      "lastUpdated": "2026-06-30T03:07:45.708178+00:00"
+    },
+    {
+      "username": "alok",
+      "flag1": true,
+      "flag2": true,
+      "flag3": true,
+      "flagsFound": 3,
+      "lastUpdated": "2026-06-30T08:22:41.361562+00:00"
+    },
+    {
+      "username": "alokk",
+      "flag1": false,
+      "flag2": false,
+      "flag3": false,
+      "flagsFound": 0,
+      "lastUpdated": "2026-06-30T03:18:42.853410+00:00"
+    },
+    {
+      "username": "anjir",
+      "flag1": true,
+      "flag2": true,
+      "flag3": true,
+      "flagsFound": 3,
+      "lastUpdated": "2026-06-30T08:21:48.540100+00:00"
+    }
+  ],
+  "session": {
+    "id": 1,
+    "username": "alok",
+    "loginAt": "2026-06-30T08:22:16.190241+00:00"
+  },
+  "logs": [
+    {
+      "username": "demo",
+      "password": "demo123",
+      "loginAt": "2026-07-02T12:13:33.716493+00:00",
+      "ip": "127.0.0.1",
+      "success": false,
+      "reason": "invalid"
+    }
+  ]
+}
